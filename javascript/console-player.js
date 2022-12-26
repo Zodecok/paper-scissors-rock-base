@@ -85,6 +85,23 @@ function getType(classes) {
     else if (classes.includes("scissors")) return "scissors";
 }
 
+function update() {
+    let results = document.querySelectorAll(".score");
+    let classList;
+    results.forEach(result => {
+        classList = result.classList;
+        classList = Array.from(classList);
+        classList.map(single => single.toLowerCase());
+        if (classList.includes("draw")) {
+            result.textContent = `Draws: ${roundsWon.Draw}`;
+        } else if (classList.includes("wins")) {
+            result.textContent = `Wins: ${roundsWon.Won}`;
+        } else if (classList.includes("losses")) {
+            result.textContent = `Losses: ${roundsWon.Loss}`;
+        }
+    })
+}
+
 function game(e) {
     const results = document.querySelector(".results");
 
@@ -98,8 +115,9 @@ function game(e) {
     resultMesage = playRound(computerSelection, playerSelection);
 
     results.textContent = `${resultMesage}`;
-
     countAdd(resultMesage);
+    update();
+
     if (roundsWon.Won >= 5 || roundsWon.Loss >= 5) {
         results.textContent = finalMessage(roundsWon);
     }
